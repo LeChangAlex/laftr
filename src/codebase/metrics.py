@@ -2,6 +2,9 @@ import numpy as np
 
 eps = 1e-12
 
+def mean(Y):
+    return tf.math.reduce_mean(Y)
+
 def pos(Y):
     return np.sum(np.round(Y)).astype(np.float32)
 
@@ -100,7 +103,7 @@ def DI_soft(Y, Ypred, A):
     return (DI_FN_soft(Y, Ypred, A) + DI_FP_soft(Y, Ypred, A)) * 0.5
 
 def DP(Ypred, A): #demographic disparity
-    return abs(subgroup(PR, A, Ypred) - subgroup(PR, 1 - A, Ypred))
+    return abs(subgroup(mean ,A, Ypred) - subgroup(mean, 1 - A, Ypred))
 
 def NLL(Y, Ypred, eps=eps):
     return -np.mean(np.multiply(Y, np.log(Ypred + eps)) + np.multiply(1. - Y, np.log(1 - Ypred + eps)))
