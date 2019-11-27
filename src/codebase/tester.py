@@ -95,7 +95,7 @@ class Tester(object):
         metD['ClassMSE'] = test_L['class']
 
 
-        # err = errRate(Y, Y_hat)
+        err = 0 # errRate(Y, Y_hat)
         difp = 0#DI_FP(Y, Y_hat, A)
         difn = 0#DI_FN(Y, Y_hat, A)
         di = 0#DI(Y, Y_hat, A)

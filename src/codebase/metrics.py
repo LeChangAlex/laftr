@@ -3,7 +3,7 @@ import numpy as np
 eps = 1e-12
 
 def mean(Y):
-    return tf.math.reduce_mean(Y)
+    return np.mean(Y)
 
 def pos(Y):
     return np.sum(np.round(Y)).astype(np.float32)
