@@ -117,6 +117,8 @@ def DeltaErr(Y, Ypred, A):
     return abs(avg_err_1 - avg_err_0)
 
 def LogRegressionCoeff(Ypred, A):  
+    Ypred = np.ravel(Ypred)
+    A = np.ravel(A)
     eq = len(Ypred[Ypred == 0])
     if eq == 0 or eq == len(Ypred):
         print("SKIPPED")
