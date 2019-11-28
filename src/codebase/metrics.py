@@ -119,6 +119,7 @@ def DeltaErr(Y, Ypred, A):
 def LogRegressionCoeff(Ypred, A):  
     eq = len(Ypred[Ypred == 0])
     if eq == 0 or eq == len(Ypred):
+        print("SKIPPED")
         return 0
     m = LogisticRegression().fit(A, Ypred.astype(int))
     print(m.get_params())
