@@ -115,6 +115,9 @@ def DeltaErr(Y, Ypred, A):
     avg_err_0 = subgroup(mean, 1-A, (Ypred-Y)**2) 
     return abs(avg_err_1 - avg_err_0)
 
+def PearsonCorrelation(Ypred, A):
+    return np.corrcoef(A, Ypred) 
+
 def NLL(Y, Ypred, eps=eps):
     return -np.mean(np.multiply(Y, np.log(Ypred + eps)) + np.multiply(1. - Y, np.log(1 - Ypred + eps)))
 
