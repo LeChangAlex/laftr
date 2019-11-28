@@ -155,15 +155,15 @@ class DemParGan(AbstractBaseNet):
             return final_reps
 
     def _get_class_loss(self, Y_hat, Y):
-        return tf.keras.losses.MSE(Y, Y_hat)
+        #return tf.keras.losses.MSE(Y, Y_hat)
 
-        # return cross_entropy(Y, Y_hat)
+        return cross_entropy(Y, Y_hat)
 
     def _get_recon_loss(self, X_hat, X):
         return tf.reduce_mean(tf.square(X - X_hat), axis=1)
 
     def _get_aud_loss(self, A_hat, A):
-        return cross_entropy(A, A_hat)
+        return tf.keras.losses.MSE(A, A_hat)
 
     def _get_weight_decay(self):
         var_list = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES, scope='model/aud')

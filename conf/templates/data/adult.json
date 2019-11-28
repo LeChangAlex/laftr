@@ -1,6 +1,6 @@
 "name": "adult",
-"attr0_name": "Female",
-"attr1_name": "Male",
+"attr0_name": "",
+"attr1_name": "",
 "biased": false,
 "even": false,
 "use_attr": true
