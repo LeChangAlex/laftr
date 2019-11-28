@@ -156,7 +156,7 @@ class DemParGan(AbstractBaseNet):
 
     def _get_class_loss(self, Y_hat, Y):
         #return tf.keras.losses.MSE(Y, Y_hat)
-    
+        print("CROSS ENTROPY: ", cross_entropy(Y, Y_hat))    
         return cross_entropy(Y, Y_hat)
 
     def _get_recon_loss(self, X_hat, X):
@@ -180,12 +180,12 @@ class DemParGan(AbstractBaseNet):
 
     def _get_class_preds_from_logits(self, logits):
         # continuous
-        return logits
-        # return tf.nn.sigmoid(logits)
-
-    def _get_aud_preds_from_logits(self, logits):
+        # return logits
         return tf.nn.sigmoid(logits)
 
+    def _get_aud_preds_from_logits(self, logits):
+        #return tf.nn.sigmoid(logits)
+        return logits
 
 class EqOddsUnweightedGan(DemParGan):
     """Like DemParGan, but auditor gets to use the label Y as well"""
