@@ -89,10 +89,10 @@ class Tester(object):
                        ' Class Err: {class_err:.3f} Disc Err: {disc_err:.3f}'
         print(test_res_str.format(**test_L))
 
-        # metD['ClassCE'] = test_L['class']
+        metD['ClassCE'] = test_L['class']
         # metD['DiscCE'] = test_L['disc']
         # metD['TtlCE'] = test_L['ttl']
-        metD['ClassMSE'] = test_L['class']
+        # metD['ClassMSE'] = test_L['class']
 
 
         err = errRate(Y, Y_hat)
@@ -102,8 +102,8 @@ class Tester(object):
         err_a = 0#errRate(A, A_hat)
         dp = DP(A, Y_hat)
         correlation = PearsonCorrelation(Y_hat, A)
-        delta_eo = DeltaEO(Y, Y_hat, A)
-        delta_err = DeltaErr(Y, Y_hat, A)
+        # delta_eo = DeltaEO(Y, Y_hat, A)
+        # delta_err = DeltaErr(Y, Y_hat, A)
 
         metrics_str = 'Error Rate: {},  DP: {}, correlation: {}'.format(err, dp, correlation) \
                     + '\nError Rate (A): {}'.format(err_a)
