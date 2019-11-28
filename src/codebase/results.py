@@ -19,7 +19,7 @@ class ResultLogger(object):
     def save_metrics(self, D):
         """save D (a dictionary of metrics: string to float) as csv"""
         for k in D:
-            s = '{},{:.7f}\n'.format(k, D[k])
+            s = '{},{}\n'.format(k, D[k])
             self.testcsv.write(s)
         self.testcsv.close()
         print('Metrics saved to {}'.format(self.testcsv_name))

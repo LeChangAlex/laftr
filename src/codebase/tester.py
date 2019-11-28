@@ -100,13 +100,13 @@ class Tester(object):
         difn = 0#DI_FN(Y, Y_hat, A)
         di = 0#DI(Y, Y_hat, A)
         err_a = 0#errRate(A, A_hat)
-        dp_flipped = DP(A, Y_hat)
+        dp = DP(A, Y_hat)
         correlation = PearsonCorrelation(Y_hat, A)
         delta_eo = DeltaEO(Y, Y_hat, A)
         delta_err = DeltaErr(Y, Y_hat, A)
 
-        metrics_str = 'Error Rate: {:.3f},  DI: {:.3f}, di_FP: {:.3f}, di_FN: {:.3f}'.format(err, di, difp, difn) \
-                    + '\nError Rate (A): {:.3f}'.format(err_a)
+        metrics_str = 'Error Rate: {},  DP: {}, correlation: {}'.format(err, dp, correlation) \
+                    + '\nError Rate (A): {}'.format(err_a)
         print(metrics_str)
 
         metD['ErrY'] = err
@@ -114,7 +114,7 @@ class Tester(object):
         # metD['DI_FP'] = difp
         # metD['DI_FN'] = difn
         # metD['ErrA'] = err_a
-        metD['DP_Flipped'] = dp_flipped
+        metD['DP'] = dp
         metD['correlation'] = correlation
         #metD['delta_eo'] = delta_eo
         #metD['delta_err'] = delta_err 

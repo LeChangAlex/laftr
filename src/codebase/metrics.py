@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.stats import pearsonr
 
 eps = 1e-12
 
@@ -116,7 +117,7 @@ def DeltaErr(Y, Ypred, A):
     return abs(avg_err_1 - avg_err_0)
 
 def PearsonCorrelation(Ypred, A):
-    return np.corrcoef(A, Ypred) 
+    return pearsonr(A, Ypred)[0] 
 
 def NLL(Y, Ypred, eps=eps):
     return -np.mean(np.multiply(Y, np.log(Ypred + eps)) + np.multiply(1. - Y, np.log(1 - Ypred + eps)))
