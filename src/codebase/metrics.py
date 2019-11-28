@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.stats import pearsonr
+from sklearn.linear_model import LogisticRegression
 
 eps = 1e-12
 
@@ -116,8 +116,9 @@ def DeltaErr(Y, Ypred, A):
     avg_err_0 = subgroup(mean, 1-A, (Ypred-Y)**2) 
     return abs(avg_err_1 - avg_err_0)
 
-def PearsonCorrelation(Ypred, A):
-    return pearsonr(A, Ypred)[0] 
+def LogRegressionCoeff(Ypred, A):
+    m = LogisticRegression().fit(A, Ypred).get_params()
+    print(m)
 
 def NLL(Y, Ypred, eps=eps):
     return -np.mean(np.multiply(Y, np.log(Ypred + eps)) + np.multiply(1. - Y, np.log(1 - Ypred + eps)))
