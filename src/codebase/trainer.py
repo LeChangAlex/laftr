@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 import os
-from codebase.metrics import DI, DP, DI_soft, DeltaEO, DeltaErr
+from codebase.metrics import DI, DP, DI_soft, DeltaEO, DeltaErr, LogRegressionCoeff
 from codebase.results import ResultLogger
 from codebase.tester import Tester
 
@@ -177,7 +177,6 @@ class Trainer(object):
                     continue
                 feed_dict = {self.model.X: x, self.model.Y: y, self.model.A: a, self.model.epoch: np.array([epoch])}
                 #  run encoder-classifier-decoder (don't take a train step)
-                print(self.model)
                 class_loss, class_err, recon_loss, Y_hat, A_hat, total_loss, aud_loss, aud_err = self.sess.run(
                     [self.model.class_loss,
                      self.model.class_err,
@@ -235,7 +234,7 @@ class Trainer(object):
             summary.value.add(tag="DP", simple_value=demo_dispar)
             print('DP: ', demo_dispar)
             print('Logistic:', end="")
-            LogRegressionCoeff(Y_hats, A)
+            LogRegressionCoeff(Y_hats, As)
             #print('Delta EO: ', delta_eo)
             #print('Delta_err: ', delta_err) 
 
