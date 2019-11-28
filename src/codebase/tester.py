@@ -89,83 +89,89 @@ class Tester(object):
                        ' Class Err: {class_err:.3f} Disc Err: {disc_err:.3f}'
         print(test_res_str.format(**test_L))
 
-        metD['ClassCE'] = test_L['class']
-        metD['DiscCE'] = test_L['disc']
-        metD['TtlCE'] = test_L['ttl']
+        # metD['ClassCE'] = test_L['class']
+        # metD['DiscCE'] = test_L['disc']
+        # metD['TtlCE'] = test_L['ttl']
+        metD['ClassMSE'] = test_L['class']
 
-        err = errRate(Y, Y_hat)
-        difp = DI_FP(Y, Y_hat, A)
-        difn = DI_FN(Y, Y_hat, A)
-        di = DI(Y, Y_hat, A)
-        err_a = errRate(A, A_hat)
+
+        err = 0 # errRate(Y, Y_hat)
+        difp = 0#DI_FP(Y, Y_hat, A)
+        difn = 0#DI_FN(Y, Y_hat, A)
+        di = 0#DI(Y, Y_hat, A)
+        err_a = 0#errRate(A, A_hat)
         dp = DP(Y_hat, A)
+        delta_eo = DeltaEO(Y, Y_hat, A)
+        delta_err = DeltaErr(Y, Y_hat, A)
 
         metrics_str = 'Error Rate: {:.3f},  DI: {:.3f}, di_FP: {:.3f}, di_FN: {:.3f}'.format(err, di, difp, difn) \
                     + '\nError Rate (A): {:.3f}'.format(err_a)
         print(metrics_str)
 
         metD['ErrY'] = err
-        metD['DI'] = di
-        metD['DI_FP'] = difp
-        metD['DI_FN'] = difn
-        metD['ErrA'] = err_a
+        # metD['DI'] = di
+        # metD['DI_FP'] = difp
+        # metD['DI_FN'] = difn
+        # metD['ErrA'] = err_a
         metD['DP'] = dp
-        metD['Recon'] = test_L['recon']
-        errMaskA = np.abs(A - A_hat)
+        metD['delta_eo'] = delta_eo
+        metD['delta_err'] = delta_err 
+        # metD['Recon'] = test_L['recon']
+        # errMaskA = np.abs(A - A_hat)
 
-        print('\nPredicting Y')
-        for mask, mask_nm in [(np.ones_like(A), 'A=?'), (A, 'A=1'), (1 - A, 'A=0'), (1 - errMaskA, 'ACor'), (errMaskA, 'AWro')]:
-            pr_base = subgroup(PR, mask, Y)
-            nr_base = subgroup(NR, mask, Y)
-            pr = subgroup(PR, mask, Y_hat)
-            nr = subgroup(NR, mask, Y_hat)
-            tpr = subgroup(TPR, mask, Y, Y_hat)
-            fpr = subgroup(FPR, mask, Y, Y_hat)
-            tnr = subgroup(TNR, mask, Y, Y_hat)
-            fnr = subgroup(FNR, mask, Y, Y_hat)
-            err = subgroup(errRate, mask, Y, Y_hat)
+        # print('\nPredicting Y')
+        # for mask, mask_nm in [(np.ones_like(A), 'A=?'), (A, 'A=1'), (1 - A, 'A=0'), (1 - errMaskA, 'ACor'), (errMaskA, 'AWro')]:
+        #     pr_base = subgroup(PR, mask, Y)
+        #     nr_base = subgroup(NR, mask, Y)
+        #     pr = subgroup(PR, mask, Y_hat)
+        #     nr = subgroup(NR, mask, Y_hat)
+        #     tpr = subgroup(TPR, mask, Y, Y_hat)
+        #     fpr = subgroup(FPR, mask, Y, Y_hat)
+        #     tnr = subgroup(TNR, mask, Y, Y_hat)
+        #     fnr = subgroup(FNR, mask, Y, Y_hat)
+        #     err = subgroup(errRate, mask, Y, Y_hat)
 
-            s = '{}: Base PR: {:.3f}, Base NR: {:.3f},  PR: {:.3f}, NR: {:.3f}, Err: {:.3f}, '.format(mask_nm, pr_base, nr_base, pr, nr, err) \
-                + 'TPR: {:.3f}, FNR: {:.3f}, TNR: {:.3f}, FPR: {:.3f}'.format(tpr, fnr, tnr, fpr)
-            print(s)
+        #     s = '{}: Base PR: {:.3f}, Base NR: {:.3f},  PR: {:.3f}, NR: {:.3f}, Err: {:.3f}, '.format(mask_nm, pr_base, nr_base, pr, nr, err) \
+        #         + 'TPR: {:.3f}, FNR: {:.3f}, TNR: {:.3f}, FPR: {:.3f}'.format(tpr, fnr, tnr, fpr)
+        #     print(s)
 
-            metD['{}_BasePR'.format(mask_nm)] = pr_base
-            metD['{}_BaseNR'.format(mask_nm)] = nr_base
-            metD['{}_PredPR'.format(mask_nm)] = pr
-            metD['{}_PredNR'.format(mask_nm)] = nr
-            metD['{}_Error'.format(mask_nm)] = err
-            metD['{}_TPR'.format(mask_nm)] = tpr
-            metD['{}_TNR'.format(mask_nm)] = tnr
-            metD['{}_FPR'.format(mask_nm)] = fpr
-            metD['{}_FNR'.format(mask_nm)] = fnr
+        #     metD['{}_BasePR'.format(mask_nm)] = pr_base
+        #     metD['{}_BaseNR'.format(mask_nm)] = nr_base
+        #     metD['{}_PredPR'.format(mask_nm)] = pr
+        #     metD['{}_PredNR'.format(mask_nm)] = nr
+        #     metD['{}_Error'.format(mask_nm)] = err
+        #     metD['{}_TPR'.format(mask_nm)] = tpr
+        #     metD['{}_TNR'.format(mask_nm)] = tnr
+        #     metD['{}_FPR'.format(mask_nm)] = fpr
+        #     metD['{}_FNR'.format(mask_nm)] = fnr
 
-        print('\nPredicting A')
-        errMaskY = np.abs(Y - Y_hat)
+        # print('\nPredicting A')
+        # errMaskY = np.abs(Y - Y_hat)
 
-        for mask, mask_nm in [(np.ones_like(A), 'Y=?'), (Y, 'Y=1'), (1 - Y, 'Y=0'), (1 - errMaskY, 'YCor'), (errMaskY, 'YWro')]:
-            pr_base = subgroup(PR, mask, A)
-            nr_base = subgroup(NR, mask, A)
-            pr = subgroup(PR, mask, A_hat)
-            nr = subgroup(NR, mask, A_hat)
-            tpr = subgroup(TPR, mask, A, A_hat)
-            fpr = subgroup(FPR, mask, A, A_hat)
-            tnr = subgroup(TNR, mask, A, A_hat)
-            fnr = subgroup(FNR, mask, A, A_hat)
-            err = subgroup(errRate, mask, A, A_hat)
+        # for mask, mask_nm in [(np.ones_like(A), 'Y=?'), (Y, 'Y=1'), (1 - Y, 'Y=0'), (1 - errMaskY, 'YCor'), (errMaskY, 'YWro')]:
+        #     pr_base = subgroup(PR, mask, A)
+        #     nr_base = subgroup(NR, mask, A)
+        #     pr = subgroup(PR, mask, A_hat)
+        #     nr = subgroup(NR, mask, A_hat)
+        #     tpr = subgroup(TPR, mask, A, A_hat)
+        #     fpr = subgroup(FPR, mask, A, A_hat)
+        #     tnr = subgroup(TNR, mask, A, A_hat)
+        #     fnr = subgroup(FNR, mask, A, A_hat)
+        #     err = subgroup(errRate, mask, A, A_hat)
 
-            s = '{}: Base-A1-rate: {:.3f}, Base-A0-rate: {:.3f}, Pred A1-rate: {:.3f}, Pred-A0-rate: {:.3f}, Err: {:.3f}, '.format(mask_nm, pr_base, nr_base, pr, nr, err) \
-                + 'A1-Correct: {:.3f}, A1-Wrong: {:.3f}, A0-Correct: {:.3f}, A0-Wrong: {:.3f}'.format(tpr, fnr, tnr, fpr)
-            print(s)
+        #     s = '{}: Base-A1-rate: {:.3f}, Base-A0-rate: {:.3f}, Pred A1-rate: {:.3f}, Pred-A0-rate: {:.3f}, Err: {:.3f}, '.format(mask_nm, pr_base, nr_base, pr, nr, err) \
+        #         + 'A1-Correct: {:.3f}, A1-Wrong: {:.3f}, A0-Correct: {:.3f}, A0-Wrong: {:.3f}'.format(tpr, fnr, tnr, fpr)
+        #     print(s)
 
-            metD['{}_Base-A1-rate'.format(mask_nm)] = pr_base
-            metD['{}_Base-A0-rate'.format(mask_nm)] = nr_base
-            metD['{}_Pred-A1-rate'.format(mask_nm)] = pr
-            metD['{}_Pred-A0-rate'.format(mask_nm)] = nr
-            metD['{}_Error'.format(mask_nm)] = err
-            metD['{}_A1-Correct'.format(mask_nm)] = tpr
-            metD['{}_A1-Wrong'.format(mask_nm)] = fnr
-            metD['{}_A0-Correct'.format(mask_nm)] = tnr
-            metD['{}_A0-Wrong'.format(mask_nm)] = fpr
+        #     metD['{}_Base-A1-rate'.format(mask_nm)] = pr_base
+        #     metD['{}_Base-A0-rate'.format(mask_nm)] = nr_base
+        #     metD['{}_Pred-A1-rate'.format(mask_nm)] = pr
+        #     metD['{}_Pred-A0-rate'.format(mask_nm)] = nr
+        #     metD['{}_Error'.format(mask_nm)] = err
+        #     metD['{}_A1-Correct'.format(mask_nm)] = tpr
+        #     metD['{}_A1-Wrong'.format(mask_nm)] = fnr
+        #     metD['{}_A0-Correct'.format(mask_nm)] = tnr
+        #     metD['{}_A0-Wrong'.format(mask_nm)] = fpr
 
         self.reslogger.save_metrics(metD)
         if save:
