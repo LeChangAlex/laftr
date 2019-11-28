@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 import os
-from codebase.metrics import DI, DP, DI_soft
+from codebase.metrics import DI, DP, DI_soft, DeltaEO, DeltaErr
 from codebase.results import ResultLogger
 from codebase.tester import Tester
 
@@ -229,8 +229,12 @@ class Trainer(object):
             print('DI: ', di)
             summary.value.add(tag="DI", simple_value=di)
             demo_dispar = DP(Y_hats, As)
+            delta_eo = DeltaEO(Ys, Y_hats, As)
+            delta_err = DeltaErr(Ys, Y_hats, As)
             summary.value.add(tag="DP", simple_value=demo_dispar)
             print('DP: ', demo_dispar)
+            print('Delta EO: ', delta_eo)
+            print('Delta_err: ', delta_err) 
 
             if epoch % 50 == 0 and not self.regbas:
                 # Valid set
