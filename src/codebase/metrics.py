@@ -117,11 +117,10 @@ def DeltaErr(Y, Ypred, A):
     return abs(avg_err_1 - avg_err_0)
 
 def LogRegressionCoeff(Ypred, A):
-    m = LogisticRegression().fit(A, Ypred.astype(int))
-
     eq = len(Ypred[Ypred == 0])
     if eq == 0 or eq == len(Ypred):
         return 0
+    m = LogisticRegression().fit(A, Ypred.astype(int))
     print(m.get_params())
 
 def NLL(Y, Ypred, eps=eps):
