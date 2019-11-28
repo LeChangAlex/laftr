@@ -101,11 +101,10 @@ class Tester(object):
         di = 0#DI(Y, Y_hat, A)
         err_a = 0#errRate(A, A_hat)
         dp = DP(A, Y_hat)
-        correlation = PearsonCorrelation(Y_hat, A)
         # delta_eo = DeltaEO(Y, Y_hat, A)
         # delta_err = DeltaErr(Y, Y_hat, A)
 
-        metrics_str = 'Error Rate: {},  DP: {}, correlation: {}'.format(err, dp, correlation) \
+        metrics_str = 'Error Rate: {},  DP: {}'.format(err, dp) \
                     + '\nError Rate (A): {}'.format(err_a)
         print(metrics_str)
 
@@ -115,7 +114,6 @@ class Tester(object):
         # metD['DI_FN'] = difn
         # metD['ErrA'] = err_a
         metD['DP'] = dp
-        metD['correlation'] = correlation
         #metD['delta_eo'] = delta_eo
         #metD['delta_err'] = delta_err 
         # metD['Recon'] = test_L['recon']
