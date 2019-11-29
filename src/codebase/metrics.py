@@ -117,12 +117,10 @@ def DeltaErr(Y, Ypred, A):
     return abs(avg_err_1 - avg_err_0)
 
 def LogRegressionCoeff(Ypred, A):  
-    Ypred = np.ravel(Ypred)
-    print(Ypred)
+    Ypred = np.ravel(Ypred > 0.5)
     A = np.ravel(A).reshape(-1, 1)
     eq = len(Ypred[Ypred == 0])
     if eq == 0 or eq == len(Ypred):
-        print("SKIPPED")
         return 0
     m = LogisticRegression().fit(A, Ypred.astype(int))
     print(m.get_params())
