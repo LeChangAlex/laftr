@@ -118,6 +118,7 @@ def DeltaErr(Y, Ypred, A):
 
 def LogRegressionCoeff(Ypred, A):  
     Ypred = np.ravel(Ypred)
+    print(Ypred)
     A = np.ravel(A).reshape(-1, 1)
     eq = len(Ypred[Ypred == 0])
     if eq == 0 or eq == len(Ypred):
