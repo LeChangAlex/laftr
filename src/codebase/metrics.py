@@ -123,7 +123,7 @@ def LogRegressionCoeff(Ypred, A):
     if eq == 0 or eq == len(Ypred):
         return 0
     m = LogisticRegression().fit(A, Ypred.astype(int))
-    return abs(m.coef_[0])
+    return m.coef_[0][0]
 
 def NLL(Y, Ypred, eps=eps):
     return -np.mean(np.multiply(Y, np.log(Ypred + eps)) + np.multiply(1. - Y, np.log(1 - Ypred + eps)))
