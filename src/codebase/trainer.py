@@ -233,8 +233,7 @@ class Trainer(object):
             #delta_err = DeltaErr(Ys, Y_hats, As)
             summary.value.add(tag="DP", simple_value=demo_dispar)
             print('DP: ', demo_dispar)
-            print('Logistic:', end="")
-            LogRegressionCoeff(Y_hats, As)
+            print('Logistic:', LogRegressionCoeff(Y_hats, As))
             #print('Delta EO: ', delta_eo)
             #print('Delta_err: ', delta_err) 
 
