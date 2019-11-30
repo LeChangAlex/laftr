@@ -290,7 +290,7 @@ class WassGanNoSig(WassGan):
         return logits
 
 
-class DemParWaswsGan(WassGan, DemParGan):
+class DemParWassGan(WassGan, DemParGan):
     """Like DemParGan, but wass_loss"""
     def _get_class_loss(self, Y_hat, Y):
         return WassGan._get_class_loss(self, Y_hat, Y)
