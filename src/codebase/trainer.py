@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
 import os
-from codebase.metrics import DI, DP, DI_soft, DeltaEO, DeltaErr
+from codebase.metrics import DI, DP, DI_soft, DeltaEO, DeltaErr, LogRegressionCoeff
 from codebase.results import ResultLogger
 from codebase.tester import Tester
 
@@ -225,16 +225,17 @@ class Trainer(object):
             summary.value.add(tag="class_err", simple_value=valid_L['class_err'])
             summary.value.add(tag="disc_err", simple_value=valid_L['disc_err'])
 
-            di = DI(Ys, Y_hats, As) * 2
-            print('DI: ', di)
-            summary.value.add(tag="DI", simple_value=di)
-            demo_dispar = DP(Y_hats, As)
-            delta_eo = DeltaEO(Ys, Y_hats, As)
-            delta_err = DeltaErr(Ys, Y_hats, As)
+            #di = DI(Ys, Y_hats, As) * 2
+            #print('DI: ', di)
+            #summary.value.add(tag="DI", simple_value=di)
+            demo_dispar = DP(As, Y_hats) # This is flipped dp
+            #delta_eo = DeltaEO(Ys, Y_hats, As)
+            #delta_err = DeltaErr(Ys, Y_hats, As)
             summary.value.add(tag="DP", simple_value=demo_dispar)
             print('DP: ', demo_dispar)
-            print('Delta EO: ', delta_eo)
-            print('Delta_err: ', delta_err) 
+            print('Logistic:', LogRegressionCoeff(Y_hats, As))
+            #print('Delta EO: ', delta_eo)
+            #print('Delta_err: ', delta_err) 
 
             if epoch % 50 == 0 and not self.regbas:
                 # Valid set

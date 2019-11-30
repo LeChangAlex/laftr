@@ -89,23 +89,23 @@ class Tester(object):
                        ' Class Err: {class_err:.3f} Disc Err: {disc_err:.3f}'
         print(test_res_str.format(**test_L))
 
-        # metD['ClassCE'] = test_L['class']
+        metD['ClassCE'] = test_L['class']
         # metD['DiscCE'] = test_L['disc']
         # metD['TtlCE'] = test_L['ttl']
-        metD['ClassMSE'] = test_L['class']
+        # metD['ClassMSE'] = test_L['class']
 
 
-        err = 0 # errRate(Y, Y_hat)
+        err = errRate(Y, Y_hat)
         difp = 0#DI_FP(Y, Y_hat, A)
         difn = 0#DI_FN(Y, Y_hat, A)
         di = 0#DI(Y, Y_hat, A)
         err_a = 0#errRate(A, A_hat)
-        dp = DP(Y_hat, A)
-        delta_eo = DeltaEO(Y, Y_hat, A)
-        delta_err = DeltaErr(Y, Y_hat, A)
+        dp = DP(A, Y_hat)
+        # delta_eo = DeltaEO(Y, Y_hat, A)
+        # delta_err = DeltaErr(Y, Y_hat, A)
 
-        metrics_str = 'Error Rate: {:.3f},  DI: {:.3f}, di_FP: {:.3f}, di_FN: {:.3f}'.format(err, di, difp, difn) \
-                    + '\nError Rate (A): {:.3f}'.format(err_a)
+        metrics_str = 'Error Rate: {},  DP: {}'.format(err, dp) \
+                    + '\nError Rate (A): {}'.format(err_a)
         print(metrics_str)
 
         metD['ErrY'] = err
@@ -114,8 +114,8 @@ class Tester(object):
         # metD['DI_FN'] = difn
         # metD['ErrA'] = err_a
         metD['DP'] = dp
-        metD['delta_eo'] = delta_eo
-        metD['delta_err'] = delta_err 
+        #metD['delta_eo'] = delta_eo
+        #metD['delta_err'] = delta_err 
         # metD['Recon'] = test_L['recon']
         # errMaskA = np.abs(A - A_hat)
 
