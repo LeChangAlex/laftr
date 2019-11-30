@@ -198,10 +198,10 @@ class ContinuousYGan(DemParGan):
         return tf.nn.sigmoid(logits)
 
 
-class ContinuousAGan(DemParGan):
+class ContinuousAGanLaftr(DemParGan):
     """Like DemParGan, but sensitive attribute is continuous"""
     def _get_aud_loss(self, A_hat, A):
-        return tf.keras.losses.MSE(A, A_hat)
+        return wass_loss(A, A_hat)
 
     def _get_class_preds_from_logits(self, logits):
         return tf.nn.sigmoid(logits)
@@ -290,7 +290,7 @@ class WassGanNoSig(WassGan):
         return logits
 
 
-class DemParWassGan(WassGan, DemParGan):
+class DemParWaswsGan(WassGan, DemParGan):
     """Like DemParGan, but wass_loss"""
     def _get_class_loss(self, Y_hat, Y):
         return WassGan._get_class_loss(self, Y_hat, Y)
