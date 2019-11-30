@@ -226,13 +226,6 @@ class RegularizedContinuousYGan(ContinuousYGan):
         ]) + self.fair_coeff * _get_DP_reg(self.Y, self.Y_hat, self.A)
 
 
-class WeightedDemParWassGan(WassGan, WeightedDemParGan):
-    def _get_class_loss(self, Y_hat, Y):
-        return WassGan._get_class_loss(self, Y_hat, Y)
-
-    def _get_aud_loss(self, A_hat, A):
-        return WassGan._get_aud_loss(self, A_hat, A)
-
 # class RegularizedContinuousAGan(ContinuousAGan):
 #     def _get_loss(self):
 #         def _get_DP_reg(Y, Y_hat, A):
@@ -533,7 +526,12 @@ class RegularizedDPClassifier(RegularizedFairClassifier):
             0. * self.aud_loss
         ]) + self.fair_coeff * _get_DP_reg(self.Y, self.Y_hat, self.A)
 
-      
+class WeightedDemParWassGan(WassGan, WeightedDemParGan):
+    def _get_class_loss(self, Y_hat, Y):
+        return WassGan._get_class_loss(self, Y_hat, Y)
+
+    def _get_aud_loss(self, A_hat, A):
+        return WassGan._get_aud_loss(self, A_hat, A)
 
 # model-specific utils
 def cross_entropy(target, pred, weights=None, eps=EPS):
