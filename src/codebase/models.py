@@ -187,6 +187,72 @@ class DemParGan(AbstractBaseNet):
         return tf.nn.sigmoid(logits)
 
 
+class ContinuousYGan(DemParGan):
+    """Like DemParGan, but label is continuous"""
+    def _get_class_loss(self, Y_hat, Y):
+        return tf.keras.losses.MSE(Y, Y_hat)
+
+    def _get_class_preds_from_logits(self, logits):
+        return logits
+
+    def _get_aud_preds_from_logits(self, logits):
+        return tf.nn.sigmoid(logits)
+
+
+class ContinuousAGan(DemParGan):
+    """Like DemParGan, but sensitive attribute is continuous"""
+    def _get_aud_loss(self, A_hat, A):
+        return tf.keras.losses.MSE(A, A_hat)
+
+    def _get_class_preds_from_logits(self, logits):
+        return tf.nn.sigmoid(logits)
+
+    def _get_aud_preds_from_logits(self, logits):
+        return logits
+
+
+class RegularizedContinuousYGan(ContinuousYGan):
+    def _get_loss(self):
+        def _get_DP_reg(Y, Y_hat, A):
+            pr0 = soft_rate_1(1 - A, Y_hat)
+            pr1 = soft_rate_1(A, Y_hat)
+            dp = tf.abs(pr0 - pr1)
+            return dp
+
+        # TODO: DISCUSSION the fairness coefficient is negative with respect to the one in parent class
+        return tf.reduce_mean([
+            self.class_coeff * self.class_loss,
+            0. * self.recon_loss,
+            0. * self.aud_loss
+        ]) + self.fair_coeff * _get_DP_reg(self.Y, self.Y_hat, self.A)
+
+
+class WeightedDemParWassGan(WassGan, WeightedDemParGan):
+    def _get_class_loss(self, Y_hat, Y):
+        return WassGan._get_class_loss(self, Y_hat, Y)
+
+    def _get_aud_loss(self, A_hat, A):
+        return WassGan._get_aud_loss(self, A_hat, A)
+
+# class RegularizedContinuousAGan(ContinuousAGan):
+#     def _get_loss(self):
+#         def _get_DP_reg(Y, Y_hat, A):
+#
+#             # TODO: swap A and Y_hat?
+#             pr0 = soft_rate_1(1 - A, Y_hat)
+#             pr1 = soft_rate_1(A, Y_hat)
+#             dp = tf.abs(pr0 - pr1)
+#             return dp
+#
+#         return tf.reduce_mean([
+#             self.class_coeff * self.class_loss,
+#             0. * self.recon_loss,
+#             0. * self.aud_loss
+#         ]) + self.fair_coeff * _get_DP_reg(self.Y, self.Y_hat, self.A)
+
+
+
+
 class EqOddsUnweightedGan(DemParGan):
     """Like DemParGan, but auditor gets to use the label Y as well"""
     def _get_aud_inputs(self):
