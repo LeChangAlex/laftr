@@ -125,6 +125,16 @@ def LogRegressionCoeff(Ypred, A):
     m = LogisticRegression().fit(A, Ypred.astype(int))
     return m.coef_[0][0]
 
+def BinVariance(Ypred, A):
+    u = np.mean(A) 
+    sig = np.std(A)
+
+    low = subgroup(mean, (A < u-sig), Ypred)
+    middle = subgroup(mean, np.logical_and(u-sig <= A, A<= u + sig), Ypred)
+    high = subgroup(mean, (A > u+sig), Ypred)
+
+    return np.std([low, middle, high])
+
 def NLL(Y, Ypred, eps=eps):
     return -np.mean(np.multiply(Y, np.log(Ypred + eps)) + np.multiply(1. - Y, np.log(1 - Ypred + eps)))
 
