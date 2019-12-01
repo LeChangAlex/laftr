@@ -76,6 +76,9 @@ def subgroup(fn, mask, Y, Ypred=None):
     else: #one-argument functions
         return fn(Yf[m])
 
+def MSE(Y, Ypred):
+    return mean( (Y - Ypred) ** 2 ) 
+
 def DI_FP(Y, Ypred, A):
     fpr1 = subgroup(FPR, A, Y, Ypred)
     fpr0 = subgroup(FPR, 1 - A, Y, Ypred)

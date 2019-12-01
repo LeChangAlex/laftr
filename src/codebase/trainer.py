@@ -228,12 +228,11 @@ class Trainer(object):
             #di = DI(Ys, Y_hats, As) * 2
             #print('DI: ', di)
             #summary.value.add(tag="DI", simple_value=di)
-            demo_dispar = DP(As, Y_hats) # This is flipped dp
+            demo_dispar = DP(Y_hats, As)
             #delta_eo = DeltaEO(Ys, Y_hats, As)
             #delta_err = DeltaErr(Ys, Y_hats, As)
             summary.value.add(tag="DP", simple_value=demo_dispar)
             print('DP: ', demo_dispar)
-            print('Logistic:', LogRegressionCoeff(Y_hats, As))
             #print('Delta EO: ', delta_eo)
             #print('Delta_err: ', delta_err) 
 

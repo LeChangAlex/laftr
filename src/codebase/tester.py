@@ -100,7 +100,7 @@ class Tester(object):
         difn = 0#DI_FN(Y, Y_hat, A)
         di = 0#DI(Y, Y_hat, A)
         err_a = 0#errRate(A, A_hat)
-        dp = DP(A, Y_hat)
+        dp = DP(Y_hat, A)
         # delta_eo = DeltaEO(Y, Y_hat, A)
         # delta_err = DeltaErr(Y, Y_hat, A)
 

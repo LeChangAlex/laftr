@@ -155,8 +155,8 @@ class DemParGan(AbstractBaseNet):
             return final_reps
 
     def _get_class_loss(self, Y_hat, Y):
-        #return tf.keras.losses.MSE(Y, Y_hat)
-        return cross_entropy(Y, Y_hat)
+        return tf.keras.losses.MSE(Y, Y_hat)
+        #return cross_entropy(Y, Y_hat)
 
     def _get_recon_loss(self, X_hat, X):
         return tf.reduce_mean(tf.square(X - X_hat), axis=1)
@@ -179,12 +179,12 @@ class DemParGan(AbstractBaseNet):
 
     def _get_class_preds_from_logits(self, logits):
         # continuous
-        # return logits
-        return tf.nn.sigmoid(logits)
+        return logits
+        #return tf.nn.sigmoid(logits)
 
     def _get_aud_preds_from_logits(self, logits):
-        #return tf.nn.sigmoid(logits)
-        return logits
+        return tf.nn.sigmoid(logits)
+        #return logits
 
 class ContinuousYGan(DemParGan):
     """Like DemParGan, but label is continuous"""
